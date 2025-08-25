@@ -14,12 +14,12 @@ export class AuthService {
 
   public sign(payload: { email: string; password: string }):Observable<any> {
     return this.http.post(`${this.url}/sign`, payload).pipe(
-      map((data) => {
-        return console.log(data)
+      map((res) => {
+        return console.log(res);
       }),
-      catchError((error) => {
-        console.log(error);
-        return throwError(() => error.error.message);
+      catchError((e) => {
+        if(e.error.message) return throwError(() => e.error.message);
+        return throwError(() => "No momento não estamos conseguindo validar esse dado.");
       })
     );
   }
