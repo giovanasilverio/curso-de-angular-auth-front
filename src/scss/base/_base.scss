@@ -10,11 +10,12 @@
 }
 
 body {
-    height: 100vh;
-    background: url(../../app/assets/bg.jpg) no-repeat;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  background: url("/assets/bg.jpg") no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
