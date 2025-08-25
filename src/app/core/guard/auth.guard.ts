@@ -1,5 +1,32 @@
-import { CanActivateChildFn } from '@angular/router';
+import { Injectable } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
-export const authGuard: CanActivateChildFn = (childRoute, state) => {
-  return true;
-};
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivateChild {
+  constructor(public authService: AuthService, public router: Router) {}
+
+  canActivateChild(
+    childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['']);
+      return false;
+    }
+    return true;
+  }
+}
