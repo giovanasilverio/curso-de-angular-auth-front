@@ -1,30 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../../services/auth.service';
+
 
 @Component({
   selector: 'app-sign',
   templateUrl: './sign.component.html',
-  styleUrls: ['./sign.component.scss']
+  styleUrls: ['./sign.component.scss'],
 })
 export class SignComponent implements OnInit {
+  public formAuth!: FormGroup;
+  public msgError = '';
 
-  public formAuth!: FormGroup; // será definido no ngOnInit
-
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private authService: AuthService
   ) {}
-
-  public msgError: string = '';
 
   ngOnInit(): void {
     this.formAuth = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
     });
   }
 
-   public submitForm() {
+  public submitForm() {
     if (this.formAuth.valid) {
       this.authService
         .sign({
@@ -35,6 +36,7 @@ export class SignComponent implements OnInit {
           next: (res) => res,
           error: (e) => (this.msgError = e),
         });
-    }
   }
+}
+    
 }
